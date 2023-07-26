@@ -1,0 +1,40 @@
+./asin.c: ../asin.mod
+	@printf " -> $(C_GREEN)NMODL$(C_RESET) $<\\n"
+	(cd "..";  MODLUNIT=$(NRNUNITS) $(NOCMODL) "asin.mod" -o "/Users/dustinmiao/Documents/school/rise/RISE-gaba-neurogen/kolbaev et. al test model/Models_Kolbaev et al Scientific Reports Revision/arm64")
+
+./asin.o: ./asin.c
+	@printf " -> $(C_GREEN)Compiling$(C_RESET) $<\\n"
+	$(COMPILE) -I".." $(INCLUDES) -fPIC -c $< -o $@
+
+./cldif_CA3_NKCC1_HCO3.c: ../cldif_CA3_NKCC1_HCO3.mod
+	@printf " -> $(C_GREEN)NMODL$(C_RESET) $<\\n"
+	(cd "..";  MODLUNIT=$(NRNUNITS) $(NOCMODL) "cldif_CA3_NKCC1_HCO3.mod" -o "/Users/dustinmiao/Documents/school/rise/RISE-gaba-neurogen/kolbaev et. al test model/Models_Kolbaev et al Scientific Reports Revision/arm64")
+
+./cldif_CA3_NKCC1_HCO3.o: ./cldif_CA3_NKCC1_HCO3.c
+	@printf " -> $(C_GREEN)Compiling$(C_RESET) $<\\n"
+	$(COMPILE) -I".." $(INCLUDES) -fPIC -c $< -o $@
+
+./gabaA_Cl_HCO3.c: ../gabaA_Cl_HCO3.mod
+	@printf " -> $(C_GREEN)NMODL$(C_RESET) $<\\n"
+	(cd "..";  MODLUNIT=$(NRNUNITS) $(NOCMODL) "gabaA_Cl_HCO3.mod" -o "/Users/dustinmiao/Documents/school/rise/RISE-gaba-neurogen/kolbaev et. al test model/Models_Kolbaev et al Scientific Reports Revision/arm64")
+
+./gabaA_Cl_HCO3.o: ./gabaA_Cl_HCO3.c
+	@printf " -> $(C_GREEN)Compiling$(C_RESET) $<\\n"
+	$(COMPILE) -I".." $(INCLUDES) -fPIC -c $< -o $@
+
+./tonic.c: ../tonic.mod
+	@printf " -> $(C_GREEN)NMODL$(C_RESET) $<\\n"
+	(cd "..";  MODLUNIT=$(NRNUNITS) $(NOCMODL) "tonic.mod" -o "/Users/dustinmiao/Documents/school/rise/RISE-gaba-neurogen/kolbaev et. al test model/Models_Kolbaev et al Scientific Reports Revision/arm64")
+
+./tonic.o: ./tonic.c
+	@printf " -> $(C_GREEN)Compiling$(C_RESET) $<\\n"
+	$(COMPILE) -I".." $(INCLUDES) -fPIC -c $< -o $@
+
+./vecevent.c: ../vecevent.mod
+	@printf " -> $(C_GREEN)NMODL$(C_RESET) $<\\n"
+	(cd "..";  MODLUNIT=$(NRNUNITS) $(NOCMODL) "vecevent.mod" -o "/Users/dustinmiao/Documents/school/rise/RISE-gaba-neurogen/kolbaev et. al test model/Models_Kolbaev et al Scientific Reports Revision/arm64")
+
+./vecevent.o: ./vecevent.c
+	@printf " -> $(C_GREEN)Compiling$(C_RESET) $<\\n"
+	$(COMPILE) -I".." $(INCLUDES) -fPIC -c $< -o $@
+
