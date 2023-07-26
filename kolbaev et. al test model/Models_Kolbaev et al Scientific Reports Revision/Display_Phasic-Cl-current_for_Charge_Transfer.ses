@@ -1,0 +1,109 @@
+{load_file("nrngui.hoc")}
+objectvar save_window_, rvp_
+objectvar scene_vector_[6]
+objectvar ocbox_, ocbox_list_, scene_, scene_list_
+{ocbox_list_ = new List()  scene_list_ = new List()}
+{pwman_place(690,990,1)}
+
+//Begin PointProcessManager
+{
+load_file("pointman.hoc")
+}
+{
+soma ocbox_ = new PointProcessManager(0)
+}
+{object_push(ocbox_)}
+{
+mt.select("SEClamp") i = mt.selected()
+ms[i] = new MechanismStandard("SEClamp")
+ms[i].set("rs", 1, 0)
+ms[i].set("dur1", 6e+006, 0)
+ms[i].set("amp1", -70, 0)
+ms[i].set("dur2", 0, 0)
+ms[i].set("amp2", 0, 0)
+ms[i].set("dur3", 0, 0)
+ms[i].set("amp3", 0, 0)
+mt.select("SEClamp") i = mt.selected() maction(i)
+hoc_ac_ = 0.5
+sec.sec move() d1.flip_to(0)
+}
+{object_pop() doNotify()}
+{
+ocbox_ = ocbox_.v1
+ocbox_.map("PointProcessManager", 0, 558, 279.9, 227.7)
+}
+objref ocbox_
+//End PointProcessManager
+
+{
+xpanel("RunControl", 0)
+v_init = -70
+xvalue("Init","v_init", 1,"stdinit()", 1, 1 )
+xbutton("Init & Run","run()")
+xbutton("Stop","stoprun=1")
+runStopAt = 5
+xvalue("Continue til","runStopAt", 1,"{continuerun(runStopAt) stoprun=1}", 1, 1 )
+runStopIn = 1
+xvalue("Continue for","runStopIn", 1,"{continuerun(t + runStopIn) stoprun=1}", 1, 1 )
+xbutton("Single Step","steprun()")
+t = 622700
+xvalue("t","t", 2 )
+tstop = 101000
+xvalue("Tstop","tstop", 1,"tstop_changed()", 0, 1 )
+dt = 0.05
+xvalue("dt","dt", 1,"setdt()", 0, 1 )
+steps_per_ms = 0.01
+xvalue("Points plotted/ms","steps_per_ms", 1,"setdt()", 0, 1 )
+screen_update_invl = 1
+xvalue("Scrn update invl","screen_update_invl", 1,"", 0, 1 )
+realtime = 180.72
+xvalue("Real Time","realtime", 0,"", 0, 1 )
+xpanel(0,114)
+}
+{
+save_window_ = new Graph(0)
+save_window_.size(0,100000,-75,-65)
+scene_vector_[3] = save_window_
+{save_window_.view(0, -75, 300000, 10, 648, 60, 681.3, 200.8)}
+graphList[0].append(save_window_)
+save_window_.save_name("graphList[0].")
+save_window_.addexpr("v(.5)", 1, 1, 0.8, 0.9, 2)
+}
+{
+save_window_ = new Graph(0)
+save_window_.size(0,100000,10,15)
+scene_vector_[4] = save_window_
+{save_window_.view(0, 10, 100000, 5, 654, 726, 677.7, 144.1)}
+graphList[2].append(save_window_)
+save_window_.save_name("graphList[2].")
+save_window_.addexpr("soma.cli( 0.5 )", 1, 1, 0.8, 0.9, 2)
+}
+{
+save_window_ = new Graph(0)
+save_window_.size(0,100000,-0.05,0.05)
+scene_vector_[5] = save_window_
+{save_window_.view(0, -0.05, 100000, 0.1, 648, 391, 682.2, 196.3)}
+graphList[2].append(save_window_)
+save_window_.save_name("graphList[2].")
+save_window_.addexpr("SEClamp[0].i", 1, 1, 0.8, 0.9, 2)
+}
+{
+xpanel("cldif_CA3_NKCC1_HCO3 (Globals)", 0)
+DCl_cldif_CA3_NKCC1_HCO3 = 2
+xvalue("DCl_cldif_CA3_NKCC1_HCO3","DCl_cldif_CA3_NKCC1_HCO3", 1,"", 0, 0 )
+tau_NKCC1_cldif_CA3_NKCC1_HCO3 = 78500
+xvalue("tau_NKCC1_cldif_CA3_NKCC1_HCO3","tau_NKCC1_cldif_CA3_NKCC1_HCO3", 1,"", 0, 0 )
+tau_passive_cldif_CA3_NKCC1_HCO3 = 9.9e+019
+xvalue("tau_passive_cldif_CA3_NKCC1_HCO3","tau_passive_cldif_CA3_NKCC1_HCO3", 1,"", 0, 0 )
+tau_hco3_cldif_CA3_NKCC1_HCO3 = 1000
+xvalue("tau_hco3_cldif_CA3_NKCC1_HCO3","tau_hco3_cldif_CA3_NKCC1_HCO3", 1,"", 0, 0 )
+cli_Start_cldif_CA3_NKCC1_HCO3 = 12.6
+xvalue("cli_Start_cldif_CA3_NKCC1_HCO3","cli_Start_cldif_CA3_NKCC1_HCO3", 1,"", 0, 0 )
+hco3i_Start_cldif_CA3_NKCC1_HCO3 = 14.1
+xvalue("hco3i_Start_cldif_CA3_NKCC1_HCO3","hco3i_Start_cldif_CA3_NKCC1_HCO3", 1,"", 0, 0 )
+vrat_cldif_CA3_NKCC1_HCO3[0] = 0.239983
+xvalue("vrat_cldif_CA3_NKCC1_HCO3[0]","vrat_cldif_CA3_NKCC1_HCO3[0]", 0,"", 0, 1 )
+xpanel(0,846)
+}
+objectvar scene_vector_[1]
+{doNotify()}

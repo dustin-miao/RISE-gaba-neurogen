@@ -1,0 +1,6 @@
+// Start
+
+load_file("nrngui.hoc")
+load_file("Cell_1_SciRep_ShrinkCorr.hoc")
+load_file("Display_Phasic-Cl-current_forFreq.ses")
+load_file("Phasic_GABA_activity_only_soma_Div_Freq.hoc")

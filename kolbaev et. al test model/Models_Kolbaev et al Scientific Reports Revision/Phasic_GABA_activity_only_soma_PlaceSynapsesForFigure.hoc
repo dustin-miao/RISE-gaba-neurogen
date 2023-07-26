@@ -1,0 +1,178 @@
+//--------------------------------------------------------------------
+// Simulation of Phasic Activity
+// Synapses Distributet in soma, dasal and perisomatc dendrites
+// her without run, just to place synapses
+// used with an increased nseg of 101 (run() reasonalble only for nseg <11)
+//---------------------------------------------------------------------
+
+// ------------Definition of Parameters -------------------------------
+// --------------------------------------------------------------------
+
+
+// Determining Parameters GABA ---------------------------
+G_GABA = 0.000169   // synaptic weight according to miniature events 
+DECAY_GABA = 37
+P_GABA = 0.18
+ndend=107 
+ngabasyn = 107
+gninputs = 2
+
+
+// seed Values for random generator
+seed_GABA = 1  // seed for random function
+
+
+
+
+// ---------Definition of objects -------------------------------------
+// --------------------------------------------------------------------
+
+
+// Objects for Synapses ---------------------------------------------------------
+objref gabasyn[ngabasyn]                            // Definition of synapse objects
+
+// random function for localization of synapses
+objref rand_gaba_loc
+
+// random function for localization of synapses in which dendrite
+objref rand_gaba_dend
+
+// random function for synapses parameters
+objref rand_gaba_t
+
+// definition of Vectors for Gaba-Stimulation (t_vec = timestamps t_vecr = sorted timestamps, g_vec = rel conductance)
+objref gabastim[ngabasyn], gaba_t_vec[ngabasyn], gaba_t_vecr[ngabasyn], synpulsegaba[ngabasyn]
+
+// Start of Input generation -------------------------------------------
+
+// Initialize Random Functions -----------
+rand_gaba_dend = new Random(seed_GABA+4)
+rand_gaba_t = new Random(seed_GABA+6)
+
+//Define properties of random Function
+rand_gaba_t.uniform(0, 1010101)
+
+// generate Vectors --- (gniputs, aninputs defines number of inputs per synapse) ------
+for i = 0, ngabasyn-1 {
+  gaba_t_vec[i] = new Vector(gninputs)
+  gaba_t_vecr[i] = new Vector(gninputs)
+}
+
+printf("\n Pos: ")
+// Distribute GABA synapses -----------------------------------------------------------
+// Distribute in soma and perisomatic dendrites
+for k=0, 8 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    dend[0]{
+      gabasyn[k] = new gaba(0.2)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=9, 17 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    dend[3]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=18, 26 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    dend[8]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=27, 35 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    dend[8]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }                                         
+for k=36, 44 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    dend[10]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=45, 53 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    apic[10]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=54, 62 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    apic[11]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=63, 71 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    apic[12]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=72, 80 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    apic[13]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=81, 89 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    apic[14]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=90, ndend-1 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    soma{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+
+printf("\n \n")
+
+
+

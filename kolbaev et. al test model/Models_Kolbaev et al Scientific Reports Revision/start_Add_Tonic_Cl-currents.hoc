@@ -1,0 +1,6 @@
+// Start
+
+load_file("nrngui.hoc")
+load_file("Cell_1_SciRep_ShrinkCorr.hoc")
+load_file("Block-Tonic-Cl-current.ses")
+load_file("Add_tonic_Cl-current.hoc")

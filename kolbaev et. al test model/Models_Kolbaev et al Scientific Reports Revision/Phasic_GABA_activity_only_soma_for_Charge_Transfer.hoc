@@ -1,0 +1,310 @@
+//--------------------------------------------------------------------
+// Simulation of Phasic Activity
+// Synapses Distributet in soma, dasal and perisomatc dendrites
+// synaptic activity starts after 100s
+//---------------------------------------------------------------------
+
+// ------------Definition of Parameters -------------------------------
+// --------------------------------------------------------------------
+
+// Model specific parameters
+duration = 101000   // of the recording in ms
+synact_start = 1000
+synact_dur = 100000
+ndend=107         // Number of dendrites
+
+
+// Determining Parameters GABA ---------------------------
+G_GABA = 0.000169   // synaptic weight according to miniature events 
+DECAY_GABA = 37
+P_GABA = 0.18
+ngabasyn = 107
+gninputs = 2
+
+
+// Definition of various runtime parameters --------------------------
+
+   lenghtoutputvec = 25000 // Number of Lines for output (< 32000 for Excel-Figures)
+
+
+
+tstop = duration   // Duration
+v_init = -70   // Initial voltage
+dt = 0.05       // Step Interval in ms
+
+// seed Values for random generator
+seed_GABA = 1  // seed for random function
+
+
+// ------------Procedures and Functions -------------------------------
+// --------------------------------------------------------------------
+
+// Function MakeShort ---------------------------------------//
+// Inputs: $1 Objref to Inputvector                          //
+//         $2 Objref to Outoutvector                         //
+//         lenoutvec  desired lendth of Outputvector         //
+//                                                           //
+// Reduce Inputvec to Outputvev by averaging n elements      //
+// n (reducing factor) = floor(Inputvec.size() / lenoutvec)  //
+// ----------------------------------------------------------//
+
+obfunc MakeShort() {local i, n
+
+  n = int($o1.size()/$3)
+  $o2.resize($3)
+  for i=0, $3-1 {
+    $o2.x[i] = $o1.mean(i*n, (i+1)*n-1)
+  }
+  return $o2
+}   //  End of function
+
+
+
+
+// ---------Definition of objects -------------------------------------
+// --------------------------------------------------------------------
+
+
+// Objects for Synapses ---------------------------------------------------------
+objref gabasyn[ngabasyn]                            // Definition of synapse objects
+
+// random function for localization of synapses
+objref rand_gaba_loc
+
+// random function for localization of synapses in which dendrite
+objref rand_gaba_dend
+
+// random function for synapses parameters
+objref rand_gaba_t
+
+// definition of Vectors for Gaba-Stimulation (t_vec = timestamps t_vecr = sorted timestamps, g_vec = rel conductance)
+objref gabastim[ngabasyn], gaba_t_vec[ngabasyn], gaba_t_vecr[ngabasyn], synpulsegaba[ngabasyn]
+
+
+// Define vectors to link modelled parameter output ---------------------------------
+objref timevec, curvec, clivec                                           // vectors linked to parameter-pointers
+objref shorttimevec, shortcurvec, shortclivec                            // shorter Vectors for output
+
+// Matrix for output 0 = time, 1 = Voltage, 2 = Cli
+objref Outmatrix
+
+// Define Name of Output-File
+strdef OutFileName
+
+// Define Output File
+objref OutFile
+
+
+// Generate vectors and matrices -------------------------------------
+curvec = new Vector()
+timevec = new Vector()
+clivec = new Vector()
+shortcurvec = new Vector()
+shorttimevec = new Vector()
+shortclivec = new Vector()
+
+Outmatrix = new Matrix()
+
+
+
+// Start of Input generation -------------------------------------------
+
+// Initialize Random Functions -----------
+rand_gaba_loc = new Random(seed_GABA+2)
+rand_gaba_dend = new Random(seed_GABA+4)
+rand_gaba_t = new Random(seed_GABA+6)
+
+//Define properties of random Function
+rand_gaba_t.uniform(0, synact_dur)
+
+// generate Vectors --- (gniputs, aninputs defines number of inputs per synapse) ------
+for i = 0, ngabasyn-1 {
+  gaba_t_vec[i] = new Vector(gninputs)
+  gaba_t_vecr[i] = new Vector(gninputs)
+}
+
+printf("\n Pos: ")
+// Distribute GABA synapses -----------------------------------------------------------
+// Distribute in soma and perisomatic dendrites
+for k=0, 8 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    dend[0]{
+      gabasyn[k] = new gaba(0.2)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=9, 17 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    dend[3]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=18, 26 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    dend[8]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=27, 35 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    dend[8]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }                                         
+for k=36, 44 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    dend[10]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=45, 53 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    apic[10]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=54, 62 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    apic[11]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=63, 71 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    apic[12]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=72, 80 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    apic[13]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=81, 89 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    apic[14]{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+for k=90, ndend-1 {
+    pos = rand_gaba_dend.uniform (0.0001, 0.999)
+    printf("%g = %g,",k, pos)
+    soma{
+      gabasyn[k] = new gaba(pos)
+      gabasyn[k].tau1 = 0.1
+      gabasyn[k].tau2 = DECAY_GABA
+      gabasyn[k].P = P_GABA
+      }
+    }
+
+printf("\n \n")
+
+//-- Simulation starts here -----------------------------------------------------------------
+//-------------------------------------------------------------------------------------------
+
+
+    Frequency = (gninputs*ngabasyn)/(synact_dur/1000)
+    printf("Simlation only Soma  g_GABA = %g  - F(PSC) = %.4g \n", G_GABA, Frequency)
+
+    // 2a. Generate timestamps/conductances for GABA synapses --------------------------------------
+    for f=0, ngabasyn-1 {
+      for i=0, gninputs-1 {
+          t = rand_gaba_t.repick()
+          gaba_t_vec[f].x[i]=t + synact_start
+      }
+    }
+
+    for f=0, ngabasyn-1 {
+      gaba_t_vecr[f] = gaba_t_vec[f].sort()
+    }
+
+
+  // 3. generate Vecstim-vectors from the sorted timestamp-vectors -------------------------------
+      for i=0, ngabasyn-1 {
+        gabastim[i] = new VecStim()
+        gabastim[i].play(gaba_t_vecr[i])    // GABA stimulator
+      }                                               
+
+
+  // 4. Play the Vecstim objects to the synapses ---------------------------------------------
+      for i=0, ngabasyn-1 {
+        synpulsegaba[i] = new NetCon(gabastim[i], gabasyn[i], 0, 0, G_GABA)
+      }                                                  // GABA NetCon
+
+
+  // 5. Link Objects to Output-Vectors -----------------------------------
+        timevec.record(&t)   // Time vector
+        curvec.record(&SEClamp[0].i) // Injection current
+        clivec.record(&soma.cli(0.5))
+ 
+
+  // 6. Run Simulation --------------------------------------------------------
+     run()
+
+
+  // 7. Put Data in Output Vector ------------------------------------------------------  
+   
+ 
+     MakeShort(timevec, shorttimevec, lenghtoutputvec)
+     Outmatrix.resize(shorttimevec.size()+1, 3)
+     Outmatrix.setcol(0, shorttimevec)
+        
+     MakeShort(curvec, shortcurvec, lenghtoutputvec)
+     Outmatrix.setcol(1 , shortcurvec)
+
+
+     MakeShort(clivec, shortclivec, lenghtoutputvec)
+     Outmatrix.setcol(2, shortclivec)
+
+     // Save the Data --------------------------------------------------------------------
+     OutFile = new File()
+     sprint(OutFileName, "Result_Phasic-GABA-OnlySoma-forChargeTransfer-GABA=%g-F=%.3g.asc",G_GABA*1000, Frequency)
+     OutFile.wopen(OutFileName) 
+     Outmatrix.fprint(OutFile, "\t%g")     
+     OutFile.close
+
+     printf("-finished \n")
+
+
+printf("Simulation complete \n")
+
