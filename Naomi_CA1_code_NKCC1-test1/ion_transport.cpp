@@ -309,7 +309,7 @@ void nkcc1_2state(Compartment * neuron, double t, double dt, int i){
 //		if (neuron->distance > 1.) neuron->p_nkcc =.5e3; //0.1e-9; //.1*.1e-8;
 //		if( neuron->distance > 300.) neuron->p_nkcc = .1e3; 
 
-		neuron->p_nkcc = -neuron->cl_kcc2/(v_nkcc1*F);
+		neuron->p_nkcc = -(1.5)*neuron->cl_kcc2/(v_nkcc1*F);
 	}
 	v_nkcc1 = v_nkcc1*neuron->p_nkcc; 
 	if( (i <= 39 && i >= 35 ) || ( i<=27 && i>=23) ) v_nkcc1 = v_nkcc1;
@@ -321,7 +321,7 @@ void nkcc1_2state(Compartment * neuron, double t, double dt, int i){
 
 	neuron->na_nkcc1 = (-1./5.)*v_nkcc1*F;
 	neuron->k_nkcc1 = (-4./5.)*v_nkcc1*F;
-  neuron->cl_nkcc1 = 1.1*v_nkcc1*F;
+  neuron->cl_nkcc1 = v_nkcc1*F;
 
 
 }
