@@ -13,7 +13,8 @@ def compile_and_run(program_path):
 	print(Fore.GREEN + f'[INFO] Compiling {program_path}' + Fore.RESET)
 	os.system(f'make -f Makefile')
 	print(Fore.GREEN + f'[INFO] Running {program_path}' + Fore.RESET)
-	os.system(f'./mySim')
+	os.system(f'chmod +x mySim')
+	os.system(f'./mySim > results/terminal_output.txt')
 	os.chdir('..')
 
 
@@ -43,10 +44,6 @@ def process_dir(folder_path, processed_path, results_path):
 		print(Fore.GREEN + f'[INFO] Moving {program} to finished folder' + Fore.RESET)
 		os.system(f'mv \'{program}\' ../../{processed_path}')
 		print(Fore.GREEN + f'[INFO] Renaming ../../{results_path}/results to ../../{results_path}/\'{program} results\'')
-		# os.system('pwd')
-		# os.system('ls')
-		# os.system('ls ..')
-		# os.system('ls ../results')
 		os.system(f'mv ../../{results_path}/results ../../{results_path}/\'{program} results\'')
 	print(Fore.GREEN + f'[INFO] Finished proceesing \'{folder_path}\', results located in directory \'{results_path}\'' + Fore.RESET)
 	os.chdir('..')
