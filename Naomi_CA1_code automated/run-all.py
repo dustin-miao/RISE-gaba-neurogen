@@ -10,6 +10,8 @@ def compile_and_run(program_path):
 	"""
 
 	os.chdir(program_path)
+	print(Fore.GREEN + f'[INFO] Deleting old mySim' + Fore.RESET)
+	os.system(f'rm mySim')
 	print(Fore.GREEN + f'[INFO] Compiling {program_path}' + Fore.RESET)
 	os.system(f'make -f Makefile')
 	print(Fore.GREEN + f'[INFO] Running {program_path}' + Fore.RESET)
