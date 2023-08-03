@@ -301,7 +301,7 @@ void nkcc1_2state(Compartment * neuron, double t, double dt, int i){
 //	denom = denom + (1.+neuron->k_i*neuron->cl_i*neuron->na_i*neuron->cl_i/(kna*kcl*kk*kcl))*(1.+neuron->na_o/kna)*(1.+neuron->k_o/kk)*(1.+neuron->cl_o/kcl)*(1.+neuron->cl_o/kcl);
 
   double v_nkcc1;
-  v_nkcc1 = 0.5*(pE1full*neuron->y_nkcc*kf_full - pE2full*(1-neuron->y_nkcc)*kb_full);
+  v_nkcc1 = 1.5*(pE1full*neuron->y_nkcc*kf_full - pE2full*(1-neuron->y_nkcc)*kb_full);
 //	v_nkcc1 = numerator/denom;
 
 	if(t<dt) {
