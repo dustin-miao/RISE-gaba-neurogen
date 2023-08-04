@@ -1,5 +1,5 @@
 threshold = 0
-timediff = 40
+timediff = 6
 
 numspikes = 0
 lastspike = -100000

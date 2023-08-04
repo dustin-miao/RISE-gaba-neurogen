@@ -163,7 +163,8 @@ void kcc2_chang(Compartment * neuron, double t, double dt, int i){
   double denom = 1.0+neuron->k_o*neuron->cl_o/(kk*kcl);
   denom = denom*(1.0+neuron->k_i/kk)*(1.+neuron->cl_i/kcl);
   denom = denom + (1.+neuron->k_i*neuron->cl_i/(kk*kcl))*(1.+neuron->k_o/kk)*(1.+neuron->cl_o/kcl);
-  
+  	
+  	std::cout << "asotehusanoteu " << vmax << '\n';
 //	fixed kcc2 k+:
 /*
 	double numerator = (3.*neuron->cl_o - 110.*neuron->cl_i)/(kk*kcl);
