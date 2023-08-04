@@ -155,7 +155,12 @@ void kcc2_chang(Compartment * neuron, double t, double dt, int i){
   double vol = PI*neuron->radius*neuron->radius*neuron->dx*1.e-15; // volume in liters
 	double kk = 5.0; // mM   from staley/proctor
 	double kcl = 9.0; //6.0;
-	double vmax =1.5*1.*300.e-7; //300.e-7; // modified to match staley/proctor data
+
+	double scale_factor = 1.5;
+
+	if (i == 0 && t < dt)
+		std::cout << "scale_factor = " << scale_factor << '\n';
+	double vmax =scale_factor*1.*300.e-7; //300.e-7; // modified to match staley/proctor data
 	if( i<5) vmax = 1.25*vmax;
   if( (i <= 39 && i >= 35 ) || ( i<=27 && i>=23) ) vmax = .06*1.25*vmax;
   	
@@ -163,8 +168,6 @@ void kcc2_chang(Compartment * neuron, double t, double dt, int i){
   double denom = 1.0+neuron->k_o*neuron->cl_o/(kk*kcl);
   denom = denom*(1.0+neuron->k_i/kk)*(1.+neuron->cl_i/kcl);
   denom = denom + (1.+neuron->k_i*neuron->cl_i/(kk*kcl))*(1.+neuron->k_o/kk)*(1.+neuron->cl_o/kcl);
-
-  // std::cout << "vmax scchchtcrhtxdrchdrchdtxdhchrrdgxtdcr: " << vmax << '\n';
   
 //	fixed kcc2 k+:
 /*
