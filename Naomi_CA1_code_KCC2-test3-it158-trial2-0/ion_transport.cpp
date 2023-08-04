@@ -155,7 +155,7 @@ void kcc2_chang(Compartment * neuron, double t, double dt, int i){
   double vol = PI*neuron->radius*neuron->radius*neuron->dx*1.e-15; // volume in liters
 	double kk = 5.0; // mM   from staley/proctor
 	double kcl = 9.0; //6.0;
-	double vmax =5*300.e-7; //300.e-7; // modified to match staley/proctor data
+	double vmax =0*1.*300.e-7; //300.e-7; // modified to match staley/proctor data
 	if( i<5) vmax = 1.25*vmax;
   if( (i <= 39 && i >= 35 ) || ( i<=27 && i>=23) ) vmax = .06*1.25*vmax;
   	
@@ -173,6 +173,7 @@ void kcc2_chang(Compartment * neuron, double t, double dt, int i){
 */
        double vkcc2 = vmax*numerator/denom;
 //  if(fabs(vkcc2) < 1.e-15) vkcc2 = 0.0;
+
   neuron->k_kcc2 = -vkcc2*F;
   neuron->cl_kcc2 = vkcc2*F;
 	if(i==0 && t<dt) cout << "Ikcc2,max: " << vmax*F << endl;
@@ -301,7 +302,7 @@ void nkcc1_2state(Compartment * neuron, double t, double dt, int i){
 //	denom = denom + (1.+neuron->k_i*neuron->cl_i*neuron->na_i*neuron->cl_i/(kna*kcl*kk*kcl))*(1.+neuron->na_o/kna)*(1.+neuron->k_o/kk)*(1.+neuron->cl_o/kcl)*(1.+neuron->cl_o/kcl);
 
   double v_nkcc1;
-  v_nkcc1 = 1.5*(pE1full*neuron->y_nkcc*kf_full - pE2full*(1-neuron->y_nkcc)*kb_full);
+  v_nkcc1 = (pE1full*neuron->y_nkcc*kf_full - pE2full*(1-neuron->y_nkcc)*kb_full);
 //	v_nkcc1 = numerator/denom;
 
 	if(t<dt) {

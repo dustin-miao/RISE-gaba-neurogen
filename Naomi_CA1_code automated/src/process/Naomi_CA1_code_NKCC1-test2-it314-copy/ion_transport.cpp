@@ -155,7 +155,7 @@ void kcc2_chang(Compartment * neuron, double t, double dt, int i){
   double vol = PI*neuron->radius*neuron->radius*neuron->dx*1.e-15; // volume in liters
 	double kk = 5.0; // mM   from staley/proctor
 	double kcl = 9.0; //6.0;
-	double vmax =5*300.e-7; //300.e-7; // modified to match staley/proctor data
+	double vmax =1.*300.e-7; //300.e-7; // modified to match staley/proctor data
 	if( i<5) vmax = 1.25*vmax;
   if( (i <= 39 && i >= 35 ) || ( i<=27 && i>=23) ) vmax = .06*1.25*vmax;
   	
@@ -301,7 +301,7 @@ void nkcc1_2state(Compartment * neuron, double t, double dt, int i){
 //	denom = denom + (1.+neuron->k_i*neuron->cl_i*neuron->na_i*neuron->cl_i/(kna*kcl*kk*kcl))*(1.+neuron->na_o/kna)*(1.+neuron->k_o/kk)*(1.+neuron->cl_o/kcl)*(1.+neuron->cl_o/kcl);
 
   double v_nkcc1;
-  v_nkcc1 = 1.5*(pE1full*neuron->y_nkcc*kf_full - pE2full*(1-neuron->y_nkcc)*kb_full);
+  v_nkcc1 = (pE1full*neuron->y_nkcc*kf_full - pE2full*(1-neuron->y_nkcc)*kb_full);
 //	v_nkcc1 = numerator/denom;
 
 	if(t<dt) {
@@ -309,9 +309,9 @@ void nkcc1_2state(Compartment * neuron, double t, double dt, int i){
 //		if (neuron->distance > 1.) neuron->p_nkcc =.5e3; //0.1e-9; //.1*.1e-8;
 //		if( neuron->distance > 300.) neuron->p_nkcc = .1e3; 
 
-		neuron->p_nkcc = -neuron->cl_kcc2/(v_nkcc1*F);
+		neuron->p_nkcc = -*neuron->cl_kcc2/(v_nkcc1*F);
 	}
-	v_nkcc1 = v_nkcc1*neuron->p_nkcc; 
+	v_nkcc1 = 1.5*v_nkcc1*neuron->p_nkcc; 
 	if( (i <= 39 && i >= 35 ) || ( i<=27 && i>=23) ) v_nkcc1 = v_nkcc1;
 	//if(neuron->distance < 10.) v_nkcc1 = 0.;
   //for testing:
