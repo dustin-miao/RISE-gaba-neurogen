@@ -311,6 +311,12 @@ void nkcc1_2state(Compartment * neuron, double t, double dt, int i){
 
 		neuron->p_nkcc = -neuron->cl_kcc2/(v_nkcc1*F);
 	}
+
+	double v_nkcc1_scale = 1.5;
+	if (t < dt && i == 0) std::cout << "v_nkcc1_scale = " << v_nkcc1_scale << '\n';
+
+	v_nkcc1 = v_nkcc1_scale*v_nkcc1;
+
 	v_nkcc1 = v_nkcc1*neuron->p_nkcc; 
 	if( (i <= 39 && i >= 35 ) || ( i<=27 && i>=23) ) v_nkcc1 = v_nkcc1;
 	//if(neuron->distance < 10.) v_nkcc1 = 0.;

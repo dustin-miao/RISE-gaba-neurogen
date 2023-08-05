@@ -174,8 +174,9 @@ void kcc2_chang(Compartment * neuron, double t, double dt, int i){
        double vkcc2 = vmax*numerator/denom;
 
        double scale = 0.5;
-       std::cout << "scale = " << scale << '\n';
-	   vkcc2 = scale*vkcc2
+       if (i == 0 && t < dt)
+       	std::cout << "scale = " << scale << '\n';
+	   vkcc2 = scale*vkcc2;
 //  if(fabs(vkcc2) < 1.e-15) vkcc2 = 0.0;
   neuron->k_kcc2 = -vkcc2*F;
   neuron->cl_kcc2 = vkcc2*F;
