@@ -156,7 +156,7 @@ void kcc2_chang(Compartment * neuron, double t, double dt, int i){
 	double kk = 5.0; // mM   from staley/proctor
 	double kcl = 9.0; //6.0;
 
-	double vmax_scale_factor = /*change this*/;
+	double vmax_scale_factor = 1.2 /*change this*/;
 	if (i == 0 && t < dt)
 		std::cout << "vmax_scale_factor = " << vmax_scale_factor << '\n';
 
@@ -319,7 +319,7 @@ void nkcc1_2state(Compartment * neuron, double t, double dt, int i){
 
 		neuron->p_nkcc = -neuron->cl_kcc2/(v_nkcc1*F);
 
-		double p_nkcc_scale = /* change this */;
+		double p_nkcc_scale = 0.8/* change this */;
 		neuron->p_nkcc *= p_nkcc_scale;
 		if (t < dt && i == 0) std::cout << "p_nkcc_scale = " << p_nkcc_scale << '\n';
 	}
