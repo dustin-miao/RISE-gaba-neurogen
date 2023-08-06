@@ -326,7 +326,7 @@ void nkcc1_2state(Compartment * neuron, double t, double dt, int i){
 	
 	v_nkcc1 = v_nkcc1*neuron->p_nkcc; 
 
-	double v_nkcc1_scale = /* change this */;
+	double v_nkcc1_scale = 1 /* change this */;
 	if (t < dt && i == 0) std::cout << "v_nkcc1_scale = " << v_nkcc1_scale << '\n';
 
 	v_nkcc1 = v_nkcc1_scale*v_nkcc1;
