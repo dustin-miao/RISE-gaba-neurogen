@@ -9,3 +9,5 @@ Gamma-aminobutyric acid (GABA) serves as the primary inhibitory neurotransmitter
 Lewin N, Aksay E, Clancy CE. Computational modeling reveals dendritic origins of GABA(A)-mediated excitation in CA1 pyramidal neurons. PLoS One. 2012;7(10):e47250. doi: 10.1371/journal.pone.0047250. Epub 2012 Oct 12. Erratum in: PLoS One. 2013;8(5). doi:[10.1371/annotation/d6af29ee-25c0-4f8e-910e-afe53ef8f963](https://doi.org/10.1371/annotation/d6af29ee-25c0-4f8e-910e-afe53ef8f963). PMID: 23071770; PMCID: PMC3470566.
 
 Kolbaev SN, Mohapatra N, Chen R, Lombardi A, Staiger JF, Luhmann HJ, Jedlicka P, Kilb W. NKCC-1 mediated Cl- uptake in immature CA3 pyramidal neurons is sufficient to compensate phasic GABAergic inputs. Sci Rep. 2020 Oct 27;10(1):18399. doi: 10.1038/s41598-020-75382-1. PMID: 33110147; PMCID: PMC7591924.
+
+[TODO] Update and reformat references
